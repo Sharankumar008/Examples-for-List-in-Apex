@@ -1,0 +1,85 @@
+public class ListDemoDIY{
+    List<Integer> numbersList=new List<Integer>{20,-4,88,-23,-7,90,45,-1,8,69};
+        
+        // Reverse a List and Store it in a new List
+        
+        public void reverseList(){
+            List<Integer> reverse=new List<Integer>();
+            for(integer i=numbersList.size()-1;i>=0;i--){
+                reverse.add(numbersList[i]);
+            }
+            System.debug('Reversed List: '+reverse);
+        }
+    
+    //Find the Biggest Number in the List
+    
+    public void biggestNumber(){
+        numbersList.sort();
+        
+        System.debug('Biggest Number='+numbersList[numbersList.size()-1]);
+    }
+    
+    //Find sum of odd and even numbers in list using for each
+    
+    public void sumOfOddAndEvenNo(){
+        Integer sumEven = 0;
+        Integer sumOdd = 0;
+        
+        for(Integer num : numbersList){
+            if(math.mod(num,2) == 0){
+                sumEven += num;
+            } else {
+                sumOdd += num;
+            }
+        }
+        
+        System.debug('Sum of even numbers: ' + sumEven);
+        System.debug('Sum of odd numbers: ' + sumOdd);
+    }
+    
+    //Find sum of odd and even numbers in list using index
+    public void anotherFormOfsum(){
+        integer evenNo=0;
+        integer oddNo=0;
+        for(integer i=0;i<numbersList.size();i++){
+            
+            if(math.mod((numbersList[i]),2) == 0){
+                evenNo+=numbersList[i];
+            } 
+            else{
+                oddNo+=numbersList[i];
+            }
+        }
+        System.debug('Sum of Even Number: '+evenNo);
+        System.debug('Sum of Odd Number: '+oddNo);
+    }
+    
+    //Find Negative Numbers in the List and Print the Count of Negative Numbers
+    public void negativeNumbers(){
+        List<Integer> negativeNumbersList=new List<Integer>();
+        for(integer i=0;i<numbersList.size();i++){
+            if(numbersList[i]<0){
+                negativeNumbersList.add(numbersList[i]);
+            }
+        }
+        System.debug('Negative Numbers List '+negativeNumbersList);
+        if(negativeNumbersList.isEmpty()){
+            System.debug('No Negative Numbers');
+        }
+        else{
+            System.debug('Count of Negative Number: '+negativeNumbersList.size());
+        }
+    }
+    
+    
+}
+
+
+/*
+ListDemoDIY objListDemoDIY=new ListDemoDIY();
+objListDemoDIY.reverseList();
+objListDemoDIY.biggestNumber();
+objListDemoDIY.sumOfOddAndEvenNo();
+objListDemoDIY.anotherFormOfsum();
+objListDemoDIY.negativeNumbers(); 
+*/
