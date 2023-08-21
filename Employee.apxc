@@ -1,0 +1,181 @@
+public class Employee {
+    
+    //if Employee Name is Already Exixts, Message should be displayed else insert Record
+    public Static void insertDML(String Name,String Position,Decimal Salary){
+        
+        List<Employee__c> empList=[Select Name__c,Position__c,Salary__c from Employee__c where name__c=:Name];
+        
+        if(empList.isEmpty()){
+            Employee__c emp=new Employee__c();
+            emp.Name__c=Name;
+            emp.Position__c=Position;
+            emp.Salary__c=Salary;
+            emplist.add(emp);  
+            database.insert(empList,false);
+            
+            System.debug('Records inserted Successfully');
+        }
+        else{
+            System.debug('Record already Exixts');
+        }
+    }
+    
+    //if position is head Department, salary should be greater than 80000
+    public Static void insertHeadAndSalary(String Name,String Position,Decimal Salary){
+        
+        List<Employee__c> empList=[Select Name__c,Position__c,Salary__c from Employee__c where name__c=:Name];
+        
+        if(empList.isEmpty()){
+            Employee__c emp=new Employee__c();
+            emp.Name__c=Name;
+            emp.Position__c=Position;
+            emp.Salary__c=Salary;
+            emplist.add(emp);  
+            
+            if(Position!='Head' && Salary>80000){
+                System.debug('If Position is '+ Position + ', Salary should not be greater than 80000');
+            }
+            else{
+                database.insert(empList,false);
+                System.debug('Records inserted Successfully');
+            }
+            
+        }
+    }
+    
+    //Maximum and minimun salary of Employee
+    public static void maxMinSalary(String Position){
+        List<AggregateResult> maxMinresult=[Select max(Salary__c) maxSal,min(salary__c) minSal from Employee__c where position__c=:Position];
+        for(AggregateResult result:maxMinresult){
+            System.debug('Maxinum salary of '+Position+' is '+result.get('maxSal'));
+            System.debug('Mininum salary of '+Position+' is '+result.get('minSal'));
+        }
+    }
+    
+    //Find Departments with less Number of Employees 
+    public static void lessEmployees(){
+        List<AggregateResult> empCount=[
+            SELECT  
+            count(id) lessEmpCount,Department_Name__r.Department_Name__c
+            from Employee__c 
+            group by Department_Name__r.Department_Name__c
+            Order by count(id) DESC
+            limit 1
+        ];
+        system.debug(empCount[0]);
+    }
+    
+    //While deleting Record, if no record exists display Message
+    public Static void deleteDML(String Name){
+        
+        List<Employee__c> empList=[Select Name__c from Employee__c where name__c=:Name];
+        System.debug(empList);
+        if(empList.isEmpty()){
+            
+            System.debug('No Records Found');
+        }
+        else{
+            //delete empList;
+            System.debug('Record Deleted');
+        }
+    }
+    
+    //while Insert, display no of Records processed
+    public Static void insertNoOfRecords(String Name,String Position,Decimal Salary){
+        integer noOfRecords=0;
+        List<Employee__c> empList=[Select Name__c,Position__c,Salary__c from Employee__c where name__c=:Name];
+        
+        if(empList.isEmpty()){
+            Employee__c emp=new Employee__c();
+            emp.Name__c=Name;
+            emp.Position__c=Position;
+            emp.Salary__c=Salary;
+            emplist.add(emp);  
+            Database.SaveResult[] sr=database.insert(empList,false);
+            
+            System.debug('Records inserted Successfully');
+            for(Database.SaveResult recordCount:sr){
+                if(recordCount.isSuccess()){
+                    noOfRecords+=1;
+                }
+            }
+            System.debug('No of Records inserted='+noOfRecords);
+        }
+        
+        else{
+            System.debug('Record already Exixts');
+        }
+    }
+    
+    
+    //while delete, display no of Records processed
+    public Static void deletedNoOfRecords(String Name){
+        integer deleteCount=0;
+        List<Employee__c> empList=[Select Name__c from Employee__c where name__c=:Name];
+        System.debug(empList);
+        if(empList.isEmpty()){
+            
+            System.debug('No Records Found');
+        }
+        else{
+            List<database.DeleteResult> deleteRecord=database.delete(empList,false);
+            System.debug('Record Deleted');
+            for(database.DeleteResult deleteEmpCount : deleteRecord){
+                if(deleteEmpCount.isSuccess()){
+                    deleteCount+=1;
+                }
+            }
+        }
+        System.debug('No of Records Deleted='+deleteCount);
+    }
+    
+    //Employee Created Without Position, make other as default
+    public Static void insertWithoutPosition(String Name,String Position,Decimal Salary){
+        
+        List<Employee__c> empList=[Select Name__c,Position__c,Salary__c from Employee__c where name__c=:Name];
+        
+        if(empList.isEmpty()){
+            Employee__c emp=new Employee__c();
+            emp.Name__c=Name;
+            emp.Salary__c=Salary;
+            if(String.isEmpty(emp.Position__c)){
+                emp.Position__c='Others';
+            }
+            else{
+                emp.Position__c=Position;
+            }
+            emplist.add(emp);  
+            
+            database.insert(empList,false);
+            System.debug('Record Created');
+            
+        }
+    }
+    
+}
+
+/*
+//if Employee Name is Already Exixts, Message should be displayed else insert Record
+employee.insertDML('emp test2','Head', 50000);
+
+//if position is head Department, salary should be greater than 80000
+employee.insertHeadAndSalary('Emp','sales Rep',92000);
+
+//Maximum and minimun salary of Employee
+employee.maxMinSalary('head');
+
+//Find Departments with less Number of Employees
+employee.lessEmployees();
+
+//While deleting Record, if no record exists display Message
+employee.deleteDML('jai');
+
+//while Insert, display no of Records processed
+employee.insertNoOfRecords('ABC','Sales Rep', 34000);
+
+//while delete, display no of Records processed
+employee.deletedNoOfRecords('ABC');
+
+//Employee Created Without Position, make other as default
+employee.insertWithoutPosition('Emp3','',42000);
+*/
