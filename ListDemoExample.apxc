@@ -1,4 +1,4 @@
-public class ListDemoDIY{
+public class ListDemoExample{
     List<Integer> numbersList=new List<Integer>{20,-4,88,-23,-7,90,45,-1,8,69};
         
         // Reverse a List and Store it in a new List
@@ -76,10 +76,10 @@ public class ListDemoDIY{
 
 
 /*
-ListDemoDIY objListDemoDIY=new ListDemoDIY();
-objListDemoDIY.reverseList();
-objListDemoDIY.biggestNumber();
-objListDemoDIY.sumOfOddAndEvenNo();
-objListDemoDIY.anotherFormOfsum();
-objListDemoDIY.negativeNumbers(); 
+ListDemoExample objDemoExample=new ListDemoExample();
+objDemoExample.reverseList();
+objDemoExample.biggestNumber();
+objDemoExample.sumOfOddAndEvenNo();
+objDemoExample.anotherFormOfsum();
+objDemoExample.negativeNumbers(); 
 */
